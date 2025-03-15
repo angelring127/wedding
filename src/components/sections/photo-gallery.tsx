@@ -7,6 +7,7 @@ import {
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
 
@@ -57,16 +58,23 @@ const PHOTOS: Photo[] = [
 
 export function PhotoGallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [api, setApi] = useState<any>(null);
+  const [api, setApi] = useState<CarouselApi>();
 
   useEffect(() => {
     if (!api) return;
+
+    api.on("select", () => {
+      setCurrentSlide(api.selectedScrollSnap());
+    });
 
     const interval = setInterval(() => {
       api.scrollNext();
     }, 3000);
 
-    return () => clearInterval(interval);
+    return () => {
+      clearInterval(interval);
+      api.off("select", () => {});
+    };
   }, [api]);
 
   return (
@@ -75,7 +83,7 @@ export function PhotoGallery() {
       className="min-h-screen flex flex-col justify-between py-20"
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-main text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-main text-center mb-12 text-[#A26249]">
           갤러리
         </h2>
         <div className="relative">
@@ -89,7 +97,7 @@ export function PhotoGallery() {
           >
             <CarouselContent>
               {PHOTOS.map((photo, index) => (
-                <CarouselItem key={index} className="md:basis-full">
+                <CarouselItem key={index} className="basis-full md:basis-1/3">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
                     <img
                       src={photo.url}
@@ -104,26 +112,30 @@ export function PhotoGallery() {
             <CarouselNext className="hidden md:flex" />
           </Carousel>
           <div className="flex justify-center gap-2 mt-4">
-            {PHOTOS.map((_, index) => (
-              <button
-                key={index}
-                className={cn(
-                  "w-2 h-2 rounded-full transition-all",
-                  currentSlide === index ? "bg-primary" : "bg-gray-300"
-                )}
-                onClick={() => {
-                  api?.scrollTo(index);
-                  setCurrentSlide(index);
-                }}
-              />
-            ))}
+            {Array.from({ length: Math.ceil(PHOTOS.length / 3) }).map(
+              (_, index) => (
+                <button
+                  key={index}
+                  className={cn(
+                    "w-2 h-2 rounded-full transition-all",
+                    Math.floor(currentSlide / 3) === index
+                      ? "bg-[#A26249]"
+                      : "bg-[#A26249]/30"
+                  )}
+                  onClick={() => {
+                    api?.scrollTo(index * 3);
+                    setCurrentSlide(index * 3);
+                  }}
+                />
+              )
+            )}
           </div>
         </div>
       </div>
 
       <div className="text-center mt-12">
-        <p className="text-3xl font-main font-bold text-gray-400">S & S</p>
-        <p className="text-sm font-main text-gray-400 mt-1">2025.05.05</p>
+        <p className="text-3xl font-main font-bold text-[#A26249]">S & S</p>
+        <p className="text-sm font-main text-[#A26249] mt-1">2025.05.05</p>
       </div>
     </section>
   );

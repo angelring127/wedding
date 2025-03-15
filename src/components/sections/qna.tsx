@@ -62,17 +62,17 @@ export function QnA() {
       className="min-h-screen flex flex-col justify-between py-20"
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-main text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-main text-center mb-12 text-[#A26249]">
           Q&A
         </h2>
         <div className="max-w-2xl mx-auto">
           <Accordion type="single" collapsible>
             {QNA_ITEMS.map((item, index) => (
               <AccordionItem key={index} value={`item-${index}`}>
-                <AccordionTrigger className="text-xl md:text-2xl font-main font-bold">
+                <AccordionTrigger className="text-xl md:text-2xl font-main font-bold text-[#A26249]">
                   {item.question}
                 </AccordionTrigger>
-                <AccordionContent className="text-lg md:text-xl text-gray-600">
+                <AccordionContent className="text-lg md:text-xl text-[#A26249]">
                   {item.answer}
                 </AccordionContent>
               </AccordionItem>
@@ -82,8 +82,8 @@ export function QnA() {
       </div>
 
       <div className="text-center mt-12">
-        <p className="text-3xl font-main font-bold text-gray-400">S & S</p>
-        <p className="text-sm font-main text-gray-400 mt-1">2025.05.05</p>
+        <p className="text-3xl font-main font-bold text-[#A26249]">S & S</p>
+        <p className="text-sm font-main text-[#A26249] mt-1">2025.05.05</p>
       </div>
     </section>
   );

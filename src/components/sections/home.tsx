@@ -177,11 +177,11 @@ export function Home() {
         className={cn(
           "hidden md:block fixed top-0 left-0 right-0 z-50 transition-all duration-300",
           isScrolled
-            ? "bg-white/80 backdrop-blur-sm shadow-sm"
-            : "bg-transparent"
+            ? "bg-white shadow-sm"
+            : "bg-transparent opacity-0 pointer-events-none"
         )}
       >
-        <div className="container mx-auto flex items-center justify-between">
+        <div className="container mx-auto flex items-center justify-between py-6">
           <p className="text-2xl font-main font-bold text-[#A26249]">S & S</p>
           <NavigationMenu>
             <ul className="flex gap-8 justify-center">

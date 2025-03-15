@@ -59,9 +59,25 @@ export function OurStory() {
 
   useEffect(() => {
     if (!api) return;
+
     api.on("select", () => {
       setCurrentSlide(api.selectedScrollSnap());
     });
+
+    // 모바일 환경에서만 자동 슬라이드 적용
+    const isMobile = window.innerWidth < 768;
+    let interval: NodeJS.Timeout;
+
+    if (isMobile) {
+      interval = setInterval(() => {
+        api.scrollNext();
+      }, 5000);
+    }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      api.off("select", () => {});
+    };
   }, [api]);
 
   return (
@@ -70,7 +86,7 @@ export function OurStory() {
       className="min-h-screen flex flex-col justify-between py-20"
     >
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl md:text-4xl font-main text-center mb-12">
+        <h2 className="text-3xl md:text-4xl font-main text-center mb-12 text-[#A26249]">
           우리의 이야기
         </h2>
         <div className="relative">
@@ -99,11 +115,13 @@ export function OurStory() {
                           </div>
                         </div>
                         <div className="flex flex-col justify-center">
-                          <h3 className="text-2xl font-main mb-2">
+                          <h3 className="text-2xl font-main mb-2 text-[#A26249]">
                             {item.title}
                           </h3>
-                          <p className="text-gray-600 mb-4">{item.date}</p>
-                          <p className="text-lg">{item.description}</p>
+                          <p className="text-[#A26249]/70 mb-4">{item.date}</p>
+                          <p className="text-lg text-[#A26249]">
+                            {item.description}
+                          </p>
                         </div>
                       </div>
                     </CardContent>
@@ -136,7 +154,9 @@ export function OurStory() {
                 key={index}
                 className={cn(
                   "w-2 h-2 rounded-full transition-all",
-                  currentSlide === index ? "bg-[#A26249] w-4" : "bg-gray-300"
+                  currentSlide === index
+                    ? "bg-[#A26249] w-4"
+                    : "bg-[#A26249]/30"
                 )}
                 onClick={() => api?.scrollTo(index)}
               />
@@ -146,8 +166,8 @@ export function OurStory() {
       </div>
 
       <div className="text-center mt-12">
-        <p className="text-3xl font-main font-bold text-gray-400">S & S</p>
-        <p className="text-sm font-main text-gray-400 mt-1">2025.05.05</p>
+        <p className="text-3xl font-main font-bold text-[#A26249]">S & S</p>
+        <p className="text-sm font-main text-[#A26249] mt-1">2025.05.05</p>
       </div>
     </section>
   );
