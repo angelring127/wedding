@@ -2,19 +2,22 @@
 
 export function Map() {
   return (
-    <section
-      id="map"
-      className="min-h-screen py-20 bg-gray-50 flex items-center relative"
-    >
+    <section id="map" className="min-h-screen py-20 flex items-center relative">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl md:text-4xl font-main text-center mb-12 text-[#A26249]">
           오시는 길
         </h2>
         <div className="w-full h-[400px] bg-gray-200 rounded-lg overflow-hidden">
-          {/* 여기에 Google Maps가 들어갈 예정 */}
-          <p className="h-full flex items-center justify-center text-[#A26249]">
-            지도가 들어갈 자리입니다
-          </p>
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2614.7440626669396!2d-122.87789492326188!3d49.035195471989604!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x5485c3f7e9df61a7%3A0x301c8ebdf9a76f9f!2s14250%20Crescent%20Rd%2C%20Surrey%2C%20BC%20V4P%201L4!5e0!3m2!1sen!2sca!4v1711499433410!5m2!1sen!2sca"
+            width="100%"
+            height="100%"
+            style={{ border: 0 }}
+            allowFullScreen
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+            className="rounded-lg"
+          />
         </div>
         <div className="mt-8 space-y-4 text-center">
           <p className="text-lg text-[#A26249]">
