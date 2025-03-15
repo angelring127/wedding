@@ -320,7 +320,7 @@ export function Home() {
 
           {/* 스크롤 화살표 */}
           <motion.div
-            className="absolute bottom-8 left-1/2 -translate-x-1/2 text-center"
+            className="absolute bottom-8 left-0 right-0 mx-auto w-full text-center"
             initial="initial"
             animate="animate"
             variants={fadeIn}
