@@ -115,11 +115,13 @@ export function OurStory() {
                           </div>
                         </div>
                         <div className="flex flex-col justify-center">
-                          <h3 className="text-2xl font-main mb-2 text-[#A26249]">
+                          <h3 className="text-2xl md:text-4xl font-main mb-2 text-[#A26249]">
                             {item.title}
                           </h3>
-                          <p className="text-[#A26249]/70 mb-4">{item.date}</p>
-                          <p className="text-lg text-[#A26249]">
+                          <p className="text-[#A26249]/70 mb-4 text-lg md:text-2xl">
+                            {item.date}
+                          </p>
+                          <p className="text-lg md:text-3xl text-[#A26249]">
                             {item.description}
                           </p>
                         </div>
