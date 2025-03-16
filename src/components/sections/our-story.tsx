@@ -56,6 +56,7 @@ const STORY_ITEMS: StoryItem[] = [
 export function OurStory() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (!api) return;
@@ -64,21 +65,34 @@ export function OurStory() {
       setCurrentSlide(api.selectedScrollSnap());
     });
 
+    // 드래그 상태 감지
+    api.on("pointerDown", () => {
+      setIsDragging(true);
+    });
+
+    api.on("pointerUp", () => {
+      setIsDragging(false);
+    });
+
     // 모바일 환경에서만 자동 슬라이드 적용
     const isMobile = window.innerWidth < 768;
     let interval: NodeJS.Timeout;
 
-    if (isMobile) {
+    if (isMobile && !isDragging) {
       interval = setInterval(() => {
-        api.scrollNext();
+        if (!isDragging) {
+          api.scrollNext();
+        }
       }, 5000);
     }
 
     return () => {
       if (interval) clearInterval(interval);
       api.off("select", () => {});
+      api.off("pointerDown", () => {});
+      api.off("pointerUp", () => {});
     };
-  }, [api]);
+  }, [api, isDragging]);
 
   return (
     <section

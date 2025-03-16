@@ -10,6 +10,7 @@ import {
   type CarouselApi,
 } from "@/components/ui/carousel";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 interface Photo {
   id: number;
@@ -59,6 +60,7 @@ const PHOTOS: Photo[] = [
 export function PhotoGallery() {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [api, setApi] = useState<CarouselApi>();
+  const [isDragging, setIsDragging] = useState(false);
 
   useEffect(() => {
     if (!api) return;
@@ -67,15 +69,31 @@ export function PhotoGallery() {
       setCurrentSlide(api.selectedScrollSnap());
     });
 
-    const interval = setInterval(() => {
-      api.scrollNext();
-    }, 3000);
+    api.on("pointerDown", () => {
+      setIsDragging(true);
+    });
+
+    api.on("pointerUp", () => {
+      setIsDragging(false);
+    });
+
+    let interval: NodeJS.Timeout;
+
+    if (!isDragging) {
+      interval = setInterval(() => {
+        if (!isDragging) {
+          api.scrollNext();
+        }
+      }, 3000);
+    }
 
     return () => {
-      clearInterval(interval);
+      if (interval) clearInterval(interval);
       api.off("select", () => {});
+      api.off("pointerDown", () => {});
+      api.off("pointerUp", () => {});
     };
-  }, [api]);
+  }, [api, isDragging]);
 
   return (
     <section
@@ -99,9 +117,12 @@ export function PhotoGallery() {
               {PHOTOS.map((photo, index) => (
                 <CarouselItem key={index} className="basis-full md:basis-1/3">
                   <div className="relative aspect-[3/4] overflow-hidden rounded-lg">
-                    <img
+                    <Image
                       src={photo.url}
                       alt={photo.alt}
+                      width={500}
+                      height={300}
+                      loading="lazy"
                       className="object-cover w-full h-full"
                     />
                   </div>

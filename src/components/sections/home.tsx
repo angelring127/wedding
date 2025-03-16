@@ -307,10 +307,11 @@ export function Home() {
                   <li key={item.href}>
                     <a
                       href={`#${item.href}`}
-                      className="text-xl md:text-2xl hover:text-[#A26249] transition-colors font-main text-[#A26249]"
+                      className="text-xl md:text-2xl text-[#A26249] font-main relative group"
                       onClick={(e) => handleNavClick(e, item.href)}
                     >
                       {item.label}
+                      <span className="absolute left-0 bottom-0 w-0 h-0.5 bg-[#A26249] transition-all duration-300 group-hover:w-full"></span>
                     </a>
                   </li>
                 ))}
