@@ -24,7 +24,7 @@ const NAV_ITEMS: NavItem[] = [
 ];
 
 // 결혼식 날짜 설정
-const WEDDING_DATE = new Date("2024-12-31T14:00:00+09:00");
+const WEDDING_DATE = new Date("2025-05-05T15:00:00+09:00");
 
 const fadeIn = {
   initial: {
